@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI-guided technical interview and assessment">
+  <title>Interview Studio</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand"><span class="brand-mark">IS</span> Interview Studio</a>
+    <span class="status"><span class="status-dot"></span> Claude assessment engine</span>
+  </header>
+
+  <main>
+    <section id="setup-view" class="view">
+      <div class="hero">
+        <p class="eyebrow">Structured technical screening</p>
+        <h1>Run a better interview<br><span>in 30 minutes.</span></h1>
+        <p class="hero-copy">Create a role-specific interview, capture spoken responses, and receive evidence-based scoring with a clear next-round recommendation.</p>
+      </div>
+
+      <form id="setup-form" class="panel setup-card">
+        <div class="panel-heading">
+          <span class="step-number">01</span>
+          <div><h2>Configure interview</h2><p>Claude builds a weighted question plan for the role.</p></div>
+        </div>
+        <label>Role
+          <input id="role" name="role" value="iOS Developer" maxlength="80" required>
+        </label>
+        <label>Technology stack
+          <input id="technology" name="technology" value="Swift, SwiftUI, UIKit, iOS architecture" maxlength="120" required>
+        </label>
+        <label>Seniority
+          <select id="level" name="level" required>
+            <option>Junior</option>
+            <option>Mid-level</option>
+            <option>Senior</option>
+            <option selected>Lead</option>
+            <option>Principal</option>
+          </select>
+        </label>
+        <div id="setup-error" class="error" role="alert"></div>
+        <button type="submit" class="primary">Generate interview <span>→</span></button>
+        <p class="privacy-note">Candidate audio stays in the browser. Only the transcript is sent for assessment.</p>
+      </form>
+    </section>
+
+    <section id="interview-view" class="view hidden">
+      <div class="interview-header">
+        <div>
+          <p id="interview-meta" class="eyebrow"></p>
+          <h1 id="interview-title">Technical interview</h1>
+        </div>
+        <div id="timer" class="timer" aria-live="polite">30:00</div>
+      </div>
+      <div class="progress-track"><div id="progress-bar"></div></div>
+
+      <div class="interview-grid">
+        <article class="panel question-card">
+          <div class="question-meta">
+            <span id="question-count">Question 1 of 8</span>
+            <span id="question-weight" class="pill">15% weight</span>
+          </div>
+          <p id="question-category" class="eyebrow"></p>
+          <h2 id="question-text"></h2>
+          <div class="question-actions">
+            <button id="read-question" class="text-button" type="button">🔊 Read question aloud</button>
+            <span id="expected-time"></span>
+          </div>
+          <details>
+            <summary>Optional interviewer probe</summary>
+            <p id="follow-up"></p>
+          </details>
+        </article>
+
+        <aside class="panel answer-card">
+          <div class="panel-heading compact">
+            <span class="step-number">02</span>
+            <div><h2>Candidate response</h2><p>Record or edit the transcript.</p></div>
+          </div>
+          <textarea id="answer" rows="11" maxlength="12000" placeholder="The candidate's response will appear here…" aria-label="Candidate answer"></textarea>
+          <div id="speech-message" class="speech-message"></div>
+          <div class="answer-actions">
+            <button id="record-button" class="record-button" type="button"><span class="mic-dot"></span> Start listening</button>
+            <button id="submit-answer" class="primary" type="button">Assess & continue →</button>
+          </div>
+          <div id="answer-error" class="error" role="alert"></div>
+        </aside>
+      </div>
+
+      <div id="assessment-toast" class="assessment-toast hidden" aria-live="polite"></div>
+      <button id="end-interview" class="end-button" type="button">End interview and view report</button>
+    </section>
+
+    <section id="report-view" class="view hidden">
+      <div class="report-heading">
+        <div><p class="eyebrow">Interview complete</p><h1>Candidate assessment</h1></div>
+        <button id="print-report" class="secondary" type="button">Print report</button>
+      </div>
+      <div id="recommendation-card" class="recommendation-card"></div>
+      <div class="report-grid">
+        <div class="panel score-panel">
+          <p class="eyebrow">Weighted score</p>
+          <div id="overall-score" class="overall-score"></div>
+          <p id="coverage"></p>
+        </div>
+        <div class="panel">
+          <p class="eyebrow">Competency breakdown</p>
+          <div id="category-scores"></div>
+        </div>
+      </div>
+      <section>
+        <h2 class="section-title">Question-by-question evidence</h2>
+        <div id="question-results"></div>
+      </section>
+      <a class="primary new-interview" href="/">Start a new interview →</a>
+    </section>
+  </main>
+
+  <div id="loading" class="loading hidden" role="status">
+    <div class="spinner"></div><p id="loading-text">Building interview plan…</p>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
